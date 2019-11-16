@@ -112,7 +112,7 @@ bail:
     return result;
 }
 ========================================================================================================================================================================================
-2：AIDL添加：
+2：AIDL添加：https://blog.csdn.net/luojiusan520/article/details/52884846
 1）main文件夹下创建aidl文件夹，将AIDL文件加到该目录
 2）代码中增加其实现
 JavaSwing开发：https://blog.csdn.net/xietansheng/article/details/72814492
