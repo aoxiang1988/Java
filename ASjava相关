@@ -1,0 +1,117 @@
+android jni开发：
+使用AS和CMake
+1）配置AS环境，增加javah工具生成，jni头文件
+   Settings->Tools->External Tools->"+"
+   Edit Tool中配置如下：
+   Proram：C:\Program Files (x86)\Java\jdk1.8.0_144\bin\javah.exe            //配置javah工具路径
+   Arguments：-classpath . -jni -d $ModuleFileDir$\src\main\cpp $FileClass$  //配置生成Javah头文件命令，路径是该工程路径（cpp文件夹是cmake使用的路径，也可使用jni使用androidmk文件）
+   Working directory: $ModuleFileDir$\src\main\java                          //配置工程Java路径，native接口类的路径
+   配置后，选中native接口定义的java文件，右键即可看到external tools定义的javah按键，生成jni的头文件
+2）配置好CMake编译环境，在工程app路径下新建CMakeList.txt文件,参考链接 https://www.jianshu.com/p/39ca6c51bc20，CMake官方学习文档：英文文档：https://cmake.org/documentation/ ，中文文档：
+
+https://www.zybuluo.com/khan-lau/note/254724
+3）完成以上步骤就可以进行AS 带so的APP编译。
+
+PS：
+jni定义的话使用动态定义比较好使，静态路径的函数可能导致编译失败，应该是路径问题
+cpp文件建议使用以下方式生成：
+========================================================================================================================================================================================
+static jstring query_by_command(JNIEnv *env, jobject clazz, jstring modemType,jstring cmd,jstring prefix) {
+     char output[100] = {0};
+     
+     return env->NewStringUTF(output);
+  }
+
+/*
+ * Class:     com_tdtech_lte_ProjectMenuAssist_batemodem_ProjectMenu
+ * Method:    setByCommands
+ * Signature: (Ljava/lang/String;[Ljava/lang/String;)Z
+ */
+static jboolean set_by_commands(JNIEnv *env, jobject clazz, jstring modemType,jobjectArray cmd) {
+    int ret = 0;
+    
+    return (ret == 0);
+  }
+
+
+static const char *classPathName = "com/xxx/xxx/xxx/xxx/XxxxXxx";//native接口定义类（路径+class名）
+
+static JNINativeMethod methods[] = {
+        { "queryByCommand", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;", (void*)query_by_command},
+        { "setByCommands", "(Ljava/lang/String;[Ljava/lang/String;)Z", (void*)set_by_commands},
+};
+
+/*
+ * Register several native methods for one class.
+ */
+static int registerNativeMethods(JNIEnv* env, const char* className,
+    JNINativeMethod* gMethods, int numMethods) {
+    jclass clazz;
+
+    clazz = env->FindClass(className);
+    if (clazz == NULL) {
+        ALOGE("Native registration unable to find class '%s'", className);
+        return JNI_FALSE;
+    }
+    if (env->RegisterNatives(clazz, gMethods, numMethods) < 0) {
+        ALOGE("RegisterNatives failed for '%s'", className);
+        return JNI_FALSE;
+    }
+
+    return JNI_TRUE;
+}
+
+
+/*
+ * Register native methods for all classes we know about.
+ *
+ * returns JNI_TRUE on success.
+ */
+static int registerNatives(JNIEnv* env) {
+    if (!registerNativeMethods(env, classPathName,
+                 methods, sizeof(methods) / sizeof(methods[0]))) {
+        return JNI_FALSE;
+    }
+
+    return JNI_TRUE;
+}
+
+// ----------------------------------------------------------------------------
+/*
+ * This is called by the VM when the shared library is first loaded.
+ */
+
+typedef union {
+    JNIEnv* env;
+    void* venv;
+} UnionJNIEnvToVoid;
+
+jint JNI_OnLoad(JavaVM* vm, void* reserved) {
+
+    UnionJNIEnvToVoid uenv;
+    uenv.venv = NULL;
+    jint result = -1;
+    JNIEnv* env = NULL;
+
+    ALOGI("JNI_OnLoad");
+
+    if (vm->GetEnv(&uenv.venv, JNI_VERSION_1_4) != JNI_OK) {
+        ALOGE("ERROR: GetEnv failed");
+        goto bail;
+    }
+    env = uenv.env;
+
+    if (registerNatives(env) != JNI_TRUE) {
+        ALOGE("ERROR: registerNatives failed");
+        goto bail;
+    }
+
+    result = JNI_VERSION_1_4;
+
+bail:
+    return result;
+}
+========================================================================================================================================================================================
+
+JavaSwing开发：https://blog.csdn.net/xietansheng/article/details/72814492
+
