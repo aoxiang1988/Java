@@ -1,5 +1,5 @@
 android jni开发：
-使用AS和CMake
+1：使用AS和CMake
 1）配置AS环境，增加javah工具生成，jni头文件
    Settings->Tools->External Tools->"+"
    Edit Tool中配置如下：
@@ -112,6 +112,8 @@ bail:
     return result;
 }
 ========================================================================================================================================================================================
-
+2：AIDL添加：
+1）main文件夹下创建aidl文件夹，将AIDL文件加到该目录
+2）代码中增加其实现
 JavaSwing开发：https://blog.csdn.net/xietansheng/article/details/72814492
 
