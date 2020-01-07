@@ -10,6 +10,69 @@ android jni开发：
 2）配置好CMake编译环境，在工程app路径下新建CMakeList.txt文件,参考链接 https://www.jianshu.com/p/39ca6c51bc20，CMake官方学习文档：英文文档：https://cmake.org/documentation/ ，中文文档：
 
 https://www.zybuluo.com/khan-lau/note/254724
+
+CMakeList.txt格式如下：
+ For more information about using CMake with Android Studio, read the
+# documentation: https://d.android.com/studio/projects/add-native-code.html
+
+# Sets the minimum version of CMake required to build the native library.
+
+#cmake支持的最小版本号
+cmake_minimum_required(VERSION 3.4.1)
+
+# Creates and names a library, sets it as either STATIC
+# or SHARED, and provides the relative paths to its source code.
+# You can define multiple libraries, and CMake builds them for you.
+# Gradle automatically packages shared libraries with your APK.
+
+#设置so链接库的文件夹
+ set(distribution_DIR ${CMAKE_SOURCE_DIR}/src/main/jniLibs)
+
+#定义so库信息，add_library和set_target_properties成对写
+ add_library(utils SHARED IMPORTED)
+ set_target_properties(utils PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libxxx1.so)
+
+ add_library(cutils SHARED IMPORTED)
+ set_target_properties(cutils PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libxxx2.so)
+
+#定义jni库的信息
+ add_library( # Sets the name of the library.
+              projectxxx
+
+              # Sets the library as a shared library.
+              SHARED
+
+              # Provides a relative path to your source file(s).
+              ${CMAKE_SOURCE_DIR}/src/main/cpp/xxx1.c
+              ${CMAKE_SOURCE_DIR}/src/main/cpp/xxx2.c
+              ${CMAKE_SOURCE_DIR}/src/main/cpp/xxx3.c
+              ${CMAKE_SOURCE_DIR}/src/main/cpp/com_xxx_xxx_ProjectName_xxx_ProjectClass.cpp
+              )
+
+# Searches for a specified prebuilt library and stores the path as a
+# variable. Because CMake includes system libraries in the search path by
+# default, you only need to specify the name of the public NDK library
+# you want to add. CMake verifies that the library exists before
+# completing its build.
+
+find_library( # Sets the name of the path variable.
+              log-lib
+
+              # Specifies the name of the NDK library that
+              # you want CMake to locate.
+              log )
+
+# Specifies libraries CMake should link to your target library. You
+# can link multiple libraries, such as libraries you define in this
+# build script, prebuilt third-party libraries, or system libraries.
+#添加链接库名
+target_link_libraries( # Specifies the target library.
+                      projectxxx
+                      xxx2
+                      xxx1
+                      # Links the target library to the log library
+                      # included in the NDK.
+                      ${log-lib} )
 3）完成以上步骤就可以进行AS 带so的APP编译。
 
 PS：
