@@ -178,5 +178,33 @@ bail:
 2：AIDL添加：https://blog.csdn.net/luojiusan520/article/details/52884846
 1）main文件夹下创建aidl文件夹，将AIDL文件加到该目录
 2）代码中增加其实现
-JavaSwing开发：https://blog.csdn.net/xietansheng/article/details/72814492
+具体实现：
+AS生成aidl文件后进行build生成对应的interFace类，在app\build\generated\source\aidl\debug\
+生成后需要在服务端实现其功能：
+在service类(MainService)中定义好private Binder mPropertInterface = new xxxxxxxxxxxxxx.Stub() {...}
+public IBinder onBind(Intent intent) {
+        return mPropertInterface;
+    }
+    绑定binder
+将aidl文件夹拷贝到客户端：
+定义一个ServiceConnection，
+private IPropertInfoInterface mInfoInterface = null;
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mInfoInterface = IPropertInfoInterface.Stub.asInterface(service);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mInfoInterface = null;
+        }
+    };
+    在oncreat中用intent启动对应的服务
+    Intent bindIntent = new Intent();
+        bindIntent.setClassName("com.android.myapplication", "'com.android.myapplication.MainService");
+        bindService(bindIntent, mConnection, BIND_AUTO_CREATE);
+    服务绑定成功，可以通过mInfoInterface接口调用内部函数设置相关信息
+=================================================================================================================================
+3：JavaSwing开发：https://blog.csdn.net/xietansheng/article/details/72814492
 
