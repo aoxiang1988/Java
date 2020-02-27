@@ -206,5 +206,12 @@ private IPropertInfoInterface mInfoInterface = null;
         bindService(bindIntent, mConnection, BIND_AUTO_CREATE);
     服务绑定成功，可以通过mInfoInterface接口调用内部函数设置相关信息
 =================================================================================================================================
-3：JavaSwing开发：https://blog.csdn.net/xietansheng/article/details/72814492
+3.Hal层开发
+Google定义了Hal层抽象接口，便于上层调用，底层驱动具体实现hal的方式，实现上层不关心底层如何实现，只调用统一接口，底层驱动各个厂商可根据hal接口去具体定义自己硬件的相关实现过程
+system代码部分在对应的interFaces文件夹下添加新的接口定义文件，如下：xxxxinterFace/1.0/IxxxxinterFace.hal
+同样chip下也需要一份这样的接口文件，确保上下层可以通信，
+一般来说hal层是用于提供底层具体实现的接口方式，便于上层通过该接口实现底层驱动相关功能，由此该接口的具体实现在底层一侧
+一般在libhardware这种硬件依赖库中实现。
+==================================================================================================================================
+4：JavaSwing开发：https://blog.csdn.net/xietansheng/article/details/72814492
 
