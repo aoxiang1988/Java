@@ -212,6 +212,174 @@ system代码部分在对应的interFaces文件夹下添加新的接口定义文�
 同样chip下也需要一份这样的接口文件，确保上下层可以通信，
 一般来说hal层是用于提供底层具体实现的接口方式，便于上层通过该接口实现底层驱动相关功能，由此该接口的具体实现在底层一侧
 一般在libhardware这种硬件依赖库中实现。
+
+接口实现：
+1)Android.mk:
+LOCAL_PATH := $(call my-dir)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := vendor.hardware.xxxxinterface@1.0-service
+LOCAL_INIT_RC := vendor.hardware.xxxxinterface@1.0-service.rc
+LOCAL_MODULE_RELATIVE_PATH := hw
+LOCAL_PROPRIETARY_MODULE := true
+LOCAL_SRC_FILES := \
+    xxxxInterface/xxxxInterface.cpp \
+    xxxxInterface/do_xxx_work.c \
+    service.cpp \
+
+LOCAL_C_INCLUDES += vendor/xxx/chipset/modules/manufacture/xxx_interface/xxx_interface/inc \
+                    vendor/xxx/chipset/modules/manufacture/xxx_interface/xxx_interface/inc \
+                    vendor/xxx/chipset/modules/manufacture/xxx_interface/xxx_interface/inc \
+                    vendor/xxx/chipset_common/modules/libc_sec/include \
+
+LOCAL_SHARED_LIBRARIES := \
+    liblog \
+    libutils \
+    libc_secshared \
+    vendor.hardware.xxxxinterface@1.0
+
+include $(BUILD_EXECUTABLE)
+
+2)init rc文件定义vendor.hardware.xxxxinterface@1.0-service.rc：
+service xxxxinterface-hal-1-0 /vendor/bin/hw/vendor.hardware.xxxxinterface@1.0-service
+    class hal
+    user system
+    group system wifi dhcp inet net_raw net_admin
+3)定义.h头文件绑定.hal
+/*
+ * Copyright (C) 2016 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef VENDOR_HARDWARE_XXXXINTERFACE_V1_0_XXXXINTERFACE_H
+#define VENDOR_HARDWARE_XXXXINTERFACE_V1_0_XXXXINTERFACE_H
+
+#include <vendor/hardware/xxxxinterface/1.0/IxxxxInterface.h>
+#include "xxxx_interface.h"
+
+#include <hidl/MQDescriptor.h>
+#include <hidl/Status.h>
+#define LOG_TAG "vendor.hardware.xxxxinterface@1.0-service"
+#define LOG_VERBOSE "vendor.hardware.xxxxinterface@1.0-service"
+namespace vendor {
+namespace hardware {
+namespace xxxxinterface {
+namespace V1_0 {
+namespace implementation {
+
+using ::vendor::hardware::xxxxinterface::V1_0::IxxxxInterface;
+
+
+using ::android::hardware::Return;
+using ::android::hardware::Void;
+using ::android::hardware::hidl_vec;
+using ::android::hardware::hidl_string;
+using ::android::sp;
+using namespace std;
+
+#define DLOPEN_FACTORY_INTERFACE_SO  "lib_xxxx_interface.so"
+
+typedef int (* NONE_PARA_RETURN_INT) ();
+
+struct xxxxInterface : public IxxxxInterface {
+public:
+	xxxxInterface();
+	~xxxxInterface();
+
+	// Method to wrap legacy HAL with xxxxInterface class
+	static IxxxxInterface* getInstance();
+   Return<int32_t> function1() override;
+   Return<void> function2() override;
+private:
+    static xxxxInterface* sInstance;
+    void * open_lib_factory();
+	void * sFacHandle;
+	void * sDevHandle;
+
+};
+
+}  // namespace implementation
+}  // namespace V1_0
+}  // namespace xxxxinterface
+}  // namespace hardware
+}  // namespace vendor
+
+#endif  // VENDOR_HARDWARE_xxxxINTERFACE_V1_0_xxxxINTERFACE_H
+
+3)通过service.c将该接口实现绑定到系统服务，保证其可以运行：
+/*
+ * Copyright 2016 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+#include <vendor/hardware/xxxxinterface/1.0/IxxxxInterface.h>
+#include <hidl/LegacySupport.h>
+#include <android/log.h>
+#include <hidl/HidlSupport.h>
+#include <hidl/HidlTransportSupport.h>
+#include "xxxxInterface.h"
+
+using vendor::hardware::xxxxinterface::V1_0::IxxxxInterface;
+using vendor::hardware::xxxxinterface::V1_0::implementation::xxxxInterface;
+using android::hardware::configureRpcThreadpool;
+using android::hardware::joinRpcThreadpool;
+using android::sp;
+
+int main() {
+    android::sp<IxxxxInterface> factoryinterface = xxxxInterface::getInstance();
+
+    configureRpcThreadpool(1, true /*callerWillJoin*/);
+
+    if (factoryinterface != nullptr) {
+        factoryinterface->registerAsService("xxxxinterface_hal");
+    } else {
+        ALOGE("Can't create instance of IxxxxInterface, nullptr");
+    }
+
+    joinRpcThreadpool();
+
+    return 0; // should never get here
+}
+
+4）实现.h文件即可正常调用接口函数了
+==================================================================================================================================
+4.selinux
+avc: denied { read write } for pid=525 comm="xxxxxxinterf" name="ttyxxxx" dev="tmpfs" ino=3492 scontext=u:r:hal_xxxxxxxinterface_default:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=0 duplicate messages suppressed
+标注的位置是添加权限时需要注意的：
+1）{ read write } ：表示缺失的权限
+2）xxxxxxinterf ：表示线程或所属代码的标签，比如若是system app会显示为system_app
+3）device ：访问的节点标签type
+4）ttyxxxx：具体的节点或文件名
+5）chr_file：权限类型
+
+添加权限
+1）找到对应的sepolicy（device/xxx/vendor/xxx62/）下的芯片类型,在file_contexts中添加type：/dev/ttyxxxx   u:object_r:ttyxxxx_dev:s0
+2）在device.te中绑定device和type：type ttyxxxx_dev dev_type
+3）绑定完成后找到所属线程的te文件（hal_xxxxxxxinterface_default.te），添加权限：allow hal_xxxxxxxinterface_default ttyxxxx_dev:chr_file {read write open}; 
+以上步骤完成后，selinux权限就被正常添加了
 ==================================================================================================================================
 4：JavaSwing开发：https://blog.csdn.net/xietansheng/article/details/72814492
 
