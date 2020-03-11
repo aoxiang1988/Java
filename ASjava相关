@@ -399,4 +399,5 @@ android {
 但是该方式较为消耗内存，需要将gvm的使用量提升到1048MB左右才能正常编译。
 ===================================================================================================================================
 4：JavaSwing开发：https://blog.csdn.net/xietansheng/article/details/72814492
+IDE_J打包：open model settings->Artifacts->'+'，选择需要打包的模式如，JAR->form moedle。。。设置完成即可
 
