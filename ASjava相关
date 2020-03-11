@@ -381,5 +381,22 @@ avc: denied { read write } for pid=525 comm="xxxxxxinterf" name="ttyxxxx" dev="t
 3）绑定完成后找到所属线程的te文件（hal_xxxxxxxinterface_default.te），添加权限：allow hal_xxxxxxxinterface_default ttyxxxx_dev:chr_file {read write open}; 
 以上步骤完成后，selinux权限就被正常添加了
 ==================================================================================================================================
+5.Gradle多重函数依赖解决：
+AS使用Gradle编译时，对于重复定义检查较eclipse使用早期编译方式严格许多，当jar包中存在重复引用时会直接报错，正常情况需要解决该重复冲突
+如无法解决，需要定义新的modele或library来引用该冲突依赖，
+build.gradle中增加以下语句即可正常编译：
+android {
+   ....
+   lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+        disable "ResourceType"
+   }
+   ....
+}
+但是该方式较为消耗内存，需要将gvm的使用量提升到1048MB左右才能正常编译。
+===================================================================================================================================
 4：JavaSwing开发：https://blog.csdn.net/xietansheng/article/details/72814492
 
