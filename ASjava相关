@@ -401,3 +401,4 @@ android {
 4：JavaSwing开发：https://blog.csdn.net/xietansheng/article/details/72814492
 IDE_J打包：open model settings->Artifacts->'+'，选择需要打包的模式如，JAR->form moedle。。。设置完成即可
 
+编码规范：https://wiki.sei.cmu.edu/confluence/display/java/SEI+CERT+Oracle+Coding+Standard+for+Java
