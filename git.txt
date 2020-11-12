@@ -1,0 +1,10 @@
+repo forall -c "git status"//类似执行git指令
+repo status
+git status
+git add
+git commit
+vim编辑
+i/insert插入
+esc退出
+：wq保存推出编辑界面
+git push HADE：for/<远端分支>
