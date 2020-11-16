@@ -1,0 +1,4 @@
+蓝牙分为：bt app， system/bt， hci， hwinterface， hw
+设置或其他蓝牙配置通过aild方式或广播方式调用bt app进行工作，如搜索，连接，传输等
+bt app通过自身jni方式调用system/bt，下发命令，（同时会有对应的回调注册）
+system/bt会下发hci 控制命令，通过hal调用底层的蓝牙芯片
