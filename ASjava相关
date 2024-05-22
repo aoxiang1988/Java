@@ -608,3 +608,44 @@ java并行代码：继承，封装，多态
     }
 ========================================
 https://www.jianshu.com/p/a676d4d959ae android audio系统描述
+
+
+===========================================================================================================================
+android代码编译环境构筑：
+
+编译环境：
+1）相关工具
+   ubuntu18（最好是用ubuntu14）
+   python2.7
+   openJDK1.8
+   gcc/g++ 4.0
+   clang/llvm 4.0+
+   高通SnapdragonLLVMARM（高通源码编译用）
+   高通Hexagon_SDK/HEXAGON_Tools（高通源码编译用）
+   ARM编译工具链gcc-arm-11.2-2022.02-x86_64-aarch64-none-elf
+   ARM编译工具链gcc-arm-11.2-2022.02-x86_64-aarch64-none-linux-gnu
+2）环境变量
+   创建路径：/pkg/qct/software/{
+                   arm/linaro-toolchain/aarch64-none-elf/4.9-2014.07, 
+                   hexagon/releases, 
+                   llvm/release/arm, 
+                   python/2.7/bin}
+
+   将ARM编译工具链解压，
+   cp gcc-arm-11.2-2022.02-x86_64-aarch64-none-elf下的所有文件到/pkg/qct/software/arm/linaro-toolchain/aarch64-none-elf/4.9-2014.07中
+   cp gcc-arm-11.2-2022.02-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu到/pkg/qct/software/arm/linaro-toolchain/aarch64-none-elf/4.9-2014.07中并改名为aarch64-linux-gnu   
+   
+   软连接python: sudo ln -s /usr/bin/python /pkg/qct/software/python/2.7/bin
+   软连接高通编译工具链（高通源码编译用）：/opt/qcom/SnapdragonLLVMARM      /pkg/qct/software/llvm/release/arm/10.0.4
+                         /opt/qcom/SnapdragonLLVMARM      /pkg/qct/software/llvm/release/arm/4.0.2
+                         /home/soft/Qualcomm/Hexagon_SDK/4.5.0.4/4.5.0.4/tools/HEXAGON_Tools/8.2.05    /pkg/qct/software/hexagon/releases
+
+
+3.编译命令：
+1）环境变量：
+   export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+   export PATH=$JAVA_HOME/bin:$PATH 
+
+
+
+
