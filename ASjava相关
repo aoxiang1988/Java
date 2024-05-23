@@ -659,5 +659,11 @@ opengrok搭建：
 4）下载tomcat（确认好opengrok使用的tomcat版本，最新支持10.1版本）
 5）创建文件夹：path/{data, etc, history, src}
 6）执行代码关联命令
+java -jar ~/tools/opengrok-1.13.7/lib/opengrok.jar \
+-c /snap/bin/ctags -P -S -v \
+-s ~/24MM/AOSP \
+-d 24MM/opengrok_codesource/AOSP/data \
+-H --repository 24MM/opengrok_codesource/AOSP/history \
+-W 24MM/opengrok_codesource/AOSP/etc/configuration.xml
 7）配置configure.xml
 
