@@ -647,5 +647,17 @@ android代码编译环境构筑：
    export PATH=$JAVA_HOME/bin:$PATH 
 
 
-
+==================================================================================================================================================================
+opengrok搭建：
+1）下载opengrok包：https://github.com/oracle/opengrok/releases?page=13
+2）下载openjdk，并配置环境变量
+        export JAVA_HOME=/home/soft/tools/openjdk-17.0.2_linux-x64_bin/jdk-17.0.2
+        CLASSPATH=$JAVA_HOME/lib:$PATH
+        PATH=$JAVA_HOME/bin:$PATH 
+        export PATH JAVA_HOME CLASSPATH
+3）安装ctags
+4）下载tomcat（确认好opengrok使用的tomcat版本，最新支持10.1版本）
+5）创建文件夹：path/{data, etc, history, src}
+6）执行代码关联命令
+7）配置configure.xml
 
