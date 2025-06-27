@@ -38,3 +38,12 @@ java笔记：
 10）组合-继承：组合是各种类作为新类的底层类被实现调用，继承时基类被复用，设计时优先考虑组合，各自完成独立功能，必要时进行继承
 
    https://blog.csdn.net/huachao1001/article/details/53906237
+
+
+opengrok命令：
+java -jar ~/tools/opengrok-1.13.7/lib/opengrok.jar \
+-c /snap/bin/ctags -P -S -v \
+-s ~/24MM/iauto/meta \
+-d 24MM/opengrok_codesource/iauto/data \
+-H --repository 24MM/opengrok_codesource/iauto/history \
+-W 24MM/opengrok_codesource/iauto/etc/configuration.xml
