@@ -1,0 +1,13 @@
+JAVA_HOME=/data/24MM/Tools/jdk-11
+CLASSPATH=$JAVA_HOME/lib
+PATH=$JAVA_HOME/bin:$PATH
+export PATH JAVA_HOME CLASSPATH
+
+java -jar /data/24MM/Tools/opengrok-1.9.4/lib/opengrok.jar -P -S -v \
+	-s /data/24MM/24MM_BSP/snapdragon-auto-gen3-la-3-4-2_ap_standard_oem \
+	-d /data/24MM/OpenGrok_Info/BSP/data \
+	-H --repository  /data/24MM/OpenGrok_Info/BSP/history \
+	-W /data/24MM/OpenGrok_Info/BSP/etc/configuration.xml
+
+
+tom cat can not start: unset CATALINA_HOME
