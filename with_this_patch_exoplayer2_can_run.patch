@@ -1,0 +1,2264 @@
+Subject: [PATCH] with this patch exoplayer2 can run
+---
+Index: ExoPlayer/library/rtsp/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/rtsp/src/main/AndroidManifest.xml b/ExoPlayer/library/rtsp/src/main/AndroidManifest.xml
+--- a/ExoPlayer/library/rtsp/src/main/AndroidManifest.xml	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/rtsp/src/main/AndroidManifest.xml	(date 1764568692770)
+@@ -14,6 +14,6 @@
+      limitations under the License.
+ -->
+ 
+-<manifest package="com.google.android.exoplayer2.source.rtsp">
++<manifest >
+   <uses-sdk />
+ </manifest>
+Index: ExoPlayer/demos/main/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/demos/main/build.gradle b/ExoPlayer/demos/main/build.gradle
+--- a/ExoPlayer/demos/main/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/demos/main/build.gradle	(date 1764571277565)
+@@ -19,9 +19,17 @@
+ android {
+     compileSdkVersion project.ext.compileSdkVersion
+ 
++    buildFeatures {
++        buildConfig = true
++    }
++
++    namespace 'com.google.android.exoplayer2.demo'
++
+     compileOptions {
+         sourceCompatibility JavaVersion.VERSION_1_8
+         targetCompatibility JavaVersion.VERSION_1_8
++
++        coreLibraryDesugaringEnabled true
+     }
+ 
+     defaultConfig {
+@@ -70,6 +78,7 @@
+ }
+ 
+ dependencies {
++    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
+     compileOnly 'org.checkerframework:checker-qual:' + checkerframeworkVersion
+     implementation 'androidx.annotation:annotation:' + androidxAnnotationVersion
+     implementation 'androidx.appcompat:appcompat:' + androidxAppCompatVersion
+Index: ExoPlayer/testutils/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/testutils/src/main/AndroidManifest.xml b/ExoPlayer/testutils/src/main/AndroidManifest.xml
+--- a/ExoPlayer/testutils/src/main/AndroidManifest.xml	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/testutils/src/main/AndroidManifest.xml	(date 1764568650121)
+@@ -14,6 +14,6 @@
+      limitations under the License.
+ -->
+ 
+-<manifest package="com.google.android.exoplayer2.testutil">
++<manifest >
+   <uses-sdk />
+ </manifest>
+Index: ExoPlayer/extensions/cronet/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/extensions/cronet/build.gradle b/ExoPlayer/extensions/cronet/build.gradle
+--- a/ExoPlayer/extensions/cronet/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/extensions/cronet/build.gradle	(date 1764567624342)
+@@ -12,7 +12,9 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+-
++android {
++    namespace 'com.google.android.exoplayer2.extension.cronet'
++}
+ dependencies {
+     api "com.google.android.gms:play-services-cronet:18.0.1"
+     implementation project(modulePrefix + 'library-common')
+Index: ExoPlayer/testdata/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/testdata/src/main/AndroidManifest.xml b/ExoPlayer/testdata/src/main/AndroidManifest.xml
+--- a/ExoPlayer/testdata/src/main/AndroidManifest.xml	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/testdata/src/main/AndroidManifest.xml	(date 1764568650123)
+@@ -14,4 +14,4 @@
+      limitations under the License.
+ -->
+ 
+-<manifest package="com.google.android.exoplayer2.testdata"/>
++<manifest />
+Index: ExoPlayer/robolectricutils/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/robolectricutils/src/main/AndroidManifest.xml b/ExoPlayer/robolectricutils/src/main/AndroidManifest.xml
+--- a/ExoPlayer/robolectricutils/src/main/AndroidManifest.xml	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/robolectricutils/src/main/AndroidManifest.xml	(date 1764568650130)
+@@ -14,6 +14,6 @@
+      limitations under the License.
+ -->
+ 
+-<manifest package="com.google.android.exoplayer2.robolectric">
++<manifest >
+   <uses-sdk />
+ </manifest>
+Index: ExoPlayer/extensions/opus/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/extensions/opus/build.gradle b/ExoPlayer/extensions/opus/build.gradle
+--- a/ExoPlayer/extensions/opus/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/extensions/opus/build.gradle	(date 1764567624438)
+@@ -14,6 +14,7 @@
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ 
+ android {
++    namespace 'com.google.android.exoplayer.ext.opus'
+     sourceSets {
+         main {
+             jniLibs.srcDir 'src/main/libs'
+Index: ExoPlayer/playbacktests/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/playbacktests/src/main/AndroidManifest.xml b/ExoPlayer/playbacktests/src/main/AndroidManifest.xml
+--- a/ExoPlayer/playbacktests/src/main/AndroidManifest.xml	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/playbacktests/src/main/AndroidManifest.xml	(date 1764568650127)
+@@ -14,4 +14,4 @@
+      limitations under the License.
+ -->
+ 
+-<manifest package="com.google.android.exoplayer2.playbacktests"/>
++<manifest />
+Index: ExoPlayer/library/ui/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/ui/src/main/AndroidManifest.xml b/ExoPlayer/library/ui/src/main/AndroidManifest.xml
+--- a/ExoPlayer/library/ui/src/main/AndroidManifest.xml	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/ui/src/main/AndroidManifest.xml	(date 1764568650134)
+@@ -14,6 +14,6 @@
+      limitations under the License.
+ -->
+ 
+-<manifest package="com.google.android.exoplayer2.ui">
++<manifest >
+   <uses-sdk />
+ </manifest>
+Index: ExoPlayer/library/dash/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/dash/src/main/AndroidManifest.xml b/ExoPlayer/library/dash/src/main/AndroidManifest.xml
+--- a/ExoPlayer/library/dash/src/main/AndroidManifest.xml	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/dash/src/main/AndroidManifest.xml	(date 1764568582176)
+@@ -14,6 +14,6 @@
+      limitations under the License.
+ -->
+ 
+-<manifest package="com.google.android.exoplayer2.source.dash">
++<manifest >
+   <uses-sdk />
+ </manifest>
+Index: ExoPlayer/demos/transformer/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/demos/transformer/build.gradle b/ExoPlayer/demos/transformer/build.gradle
+--- a/ExoPlayer/demos/transformer/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/demos/transformer/build.gradle	(date 1764567085485)
+@@ -18,7 +18,7 @@
+ 
+ android {
+     compileSdkVersion project.ext.compileSdkVersion
+-
++    namespace 'com.google.android.exoplayer2.transformerdemo'
+     compileOptions {
+         coreLibraryDesugaringEnabled true
+         sourceCompatibility JavaVersion.VERSION_1_8
+Index: ExoPlayer/extensions/cast/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/extensions/cast/build.gradle b/ExoPlayer/extensions/cast/build.gradle
+--- a/ExoPlayer/extensions/cast/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/extensions/cast/build.gradle	(date 1764567245915)
+@@ -13,6 +13,9 @@
+ // limitations under the License.
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ 
++android {
++    namespace 'com.google.android.exoplayer2.ext.cast'
++}
+ dependencies {
+     api 'com.google.android.gms:play-services-cast-framework:21.3.0'
+     implementation 'androidx.annotation:annotation:' + androidxAnnotationVersion
+Index: ExoPlayer/library/dash/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/dash/build.gradle b/ExoPlayer/library/dash/build.gradle
+--- a/ExoPlayer/library/dash/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/dash/build.gradle	(date 1764567624421)
+@@ -14,6 +14,7 @@
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ 
+ android {
++    namespace 'com.google.android.exoplayer2.source.dash'
+     buildTypes {
+         debug {
+             testCoverageEnabled = true
+Index: ExoPlayer/library/database/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/database/build.gradle b/ExoPlayer/library/database/build.gradle
+--- a/ExoPlayer/library/database/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/database/build.gradle	(date 1764567624338)
+@@ -14,6 +14,7 @@
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ 
+ android {
++    namespace 'com.google.android.exoplayer.database'
+     buildTypes {
+         debug {
+             testCoverageEnabled = true
+Index: ExoPlayer/library/datasource/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/datasource/build.gradle b/ExoPlayer/library/datasource/build.gradle
+--- a/ExoPlayer/library/datasource/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/datasource/build.gradle	(date 1764567624393)
+@@ -14,6 +14,7 @@
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ 
+ android {
++    namespace = 'com.google.android.exoplayer'
+     buildTypes {
+         debug {
+             testCoverageEnabled = true
+Index: ExoPlayer/library/decoder/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/decoder/build.gradle b/ExoPlayer/library/decoder/build.gradle
+--- a/ExoPlayer/library/decoder/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/decoder/build.gradle	(date 1764567624313)
+@@ -14,6 +14,7 @@
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ 
+ android {
++    namespace 'com.google.android.exoplayer.database'
+     buildTypes {
+         debug {
+             testCoverageEnabled = true
+Index: ExoPlayer/library/effect/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/effect/build.gradle b/ExoPlayer/library/effect/build.gradle
+--- a/ExoPlayer/library/effect/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/effect/build.gradle	(date 1764567624347)
+@@ -13,7 +13,7 @@
+ // limitations under the License.
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ android {
+-
++    namespace 'com.google.android.exoplayer'
+     defaultConfig {
+         minSdkVersion 18
+         // The following argument makes the Android Test Orchestrator run its
+Index: ExoPlayer/library/extractor/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/extractor/build.gradle b/ExoPlayer/library/extractor/build.gradle
+--- a/ExoPlayer/library/extractor/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/extractor/build.gradle	(date 1764567624430)
+@@ -14,6 +14,7 @@
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ 
+ android {
++    namespace 'com.google.android.exoplayer'
+     buildTypes {
+         debug {
+             testCoverageEnabled = true
+Index: ExoPlayer/library/hls/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/hls/build.gradle b/ExoPlayer/library/hls/build.gradle
+--- a/ExoPlayer/library/hls/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/hls/build.gradle	(date 1764567624434)
+@@ -14,6 +14,7 @@
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ 
+ android {
++    namespace 'com.google.android.exoplayer2.hls'
+     buildTypes {
+         debug {
+             testCoverageEnabled = true
+Index: ExoPlayer/library/muxer/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/muxer/build.gradle b/ExoPlayer/library/muxer/build.gradle
+--- a/ExoPlayer/library/muxer/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/muxer/build.gradle	(date 1764567624324)
+@@ -14,7 +14,7 @@
+ 
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ android {
+-
++    namespace 'com.google.android.exoplayer'
+     defaultConfig {
+         // The following argument makes the Android Test Orchestrator run its
+         // "pm clear" command after each test invocation. This command ensures
+Index: ExoPlayer/library/rtsp/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/rtsp/build.gradle b/ExoPlayer/library/rtsp/build.gradle
+--- a/ExoPlayer/library/rtsp/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/rtsp/build.gradle	(date 1764567624381)
+@@ -14,6 +14,7 @@
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ 
+ android {
++    namespace 'com.google.android.exoplayer'
+     buildTypes {
+         debug {
+             testCoverageEnabled = true
+Index: ExoPlayer/library/smoothstreaming/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/smoothstreaming/build.gradle b/ExoPlayer/library/smoothstreaming/build.gradle
+--- a/ExoPlayer/library/smoothstreaming/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/smoothstreaming/build.gradle	(date 1764567624412)
+@@ -14,6 +14,7 @@
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ 
+ android {
++    namespace 'com.google.android.exoplayer2.hls'
+     buildTypes {
+         debug {
+             testCoverageEnabled = true
+Index: ExoPlayer/library/transformer/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/transformer/build.gradle b/ExoPlayer/library/transformer/build.gradle
+--- a/ExoPlayer/library/transformer/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/transformer/build.gradle	(date 1764567624408)
+@@ -13,7 +13,7 @@
+ // limitations under the License.
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ android {
+-
++    namespace 'com.google.android.exoplayer'
+     defaultConfig {
+         minSdkVersion 21
+         // The following argument makes the Android Test Orchestrator run its
+Index: ExoPlayer/library/ui/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/ui/build.gradle b/ExoPlayer/library/ui/build.gradle
+--- a/ExoPlayer/library/ui/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/ui/build.gradle	(date 1764567624320)
+@@ -16,6 +16,7 @@
+ android.buildTypes.debug.testCoverageEnabled true
+ 
+ android {
++    namespace = 'com.google.android.exoplayer2'
+     lint {
+         baseline = file("lint-baseline.xml")
+     }
+Index: ExoPlayer/playbacktests/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/playbacktests/build.gradle b/ExoPlayer/playbacktests/build.gradle
+--- a/ExoPlayer/playbacktests/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/playbacktests/build.gradle	(date 1764567624426)
+@@ -12,7 +12,9 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+-
++android {
++    namespace 'com.google.android.exoplayer2.ext.vp9'
++}
+ dependencies {
+     androidTestImplementation 'androidx.test:rules:' + androidxTestRulesVersion
+     androidTestImplementation 'androidx.test:runner:' + androidxTestRunnerVersion
+Index: ExoPlayer/robolectricutils/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/robolectricutils/build.gradle b/ExoPlayer/robolectricutils/build.gradle
+--- a/ExoPlayer/robolectricutils/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/robolectricutils/build.gradle	(date 1764567624360)
+@@ -12,7 +12,9 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+-
++android {
++    namespace 'com.google.android.exoplayer'
++}
+ dependencies {
+     compileOnly 'org.checkerframework:checker-qual:' + checkerframeworkVersion
+     compileOnly 'org.checkerframework:checker-compat-qual:' + checkerframeworkCompatVersion
+Index: ExoPlayer/testutils/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/testutils/build.gradle b/ExoPlayer/testutils/build.gradle
+--- a/ExoPlayer/testutils/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/testutils/build.gradle	(date 1764567624417)
+@@ -12,7 +12,9 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+-
++android {
++    namespace 'com.google.android.exoplayer'
++}
+ dependencies {
+     api 'org.mockito:mockito-core:' + mockitoVersion
+     api 'androidx.test:core:' + androidxTestCoreVersion
+Index: ExoPlayer/testdata/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/testdata/build.gradle b/ExoPlayer/testdata/build.gradle
+--- a/ExoPlayer/testdata/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/testdata/build.gradle	(date 1764567624385)
+@@ -13,3 +13,6 @@
+ // limitations under the License.
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ 
++android {
++ namespace 'com.google.android.exoplayer2.ext.mediasession'
++}
+\ No newline at end of file
+Index: ExoPlayer/library/common/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/common/build.gradle b/ExoPlayer/library/common/build.gradle
+--- a/ExoPlayer/library/common/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/common/build.gradle	(date 1764567624356)
+@@ -14,6 +14,7 @@
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ 
+ android {
++    namespace 'com.google.android.exoplayer'
+     buildTypes {
+         debug {
+             testCoverageEnabled = true
+Index: ExoPlayer/library/all/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/all/build.gradle b/ExoPlayer/library/all/build.gradle
+--- a/ExoPlayer/library/all/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/all/build.gradle	(date 1764567704497)
+@@ -13,6 +13,9 @@
+ // limitations under the License.
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ 
++android {
++    namespace 'com.google.android.exoplayer2'
++}
+ dependencies {
+     api project(modulePrefix + 'library-common')
+     api project(modulePrefix + 'library-database')
+Index: ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/AspectRatioFrameLayout.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/AspectRatioFrameLayout.java b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/AspectRatioFrameLayout.java
+--- a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/AspectRatioFrameLayout.java	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/AspectRatioFrameLayout.java	(date 1764567797213)
+@@ -23,6 +23,7 @@
+ import android.widget.FrameLayout;
+ import androidx.annotation.IntDef;
+ import androidx.annotation.Nullable;
++import com.google.android.exoplayer2.R;
+ import java.lang.annotation.Documented;
+ import java.lang.annotation.Retention;
+ import java.lang.annotation.RetentionPolicy;
+Index: ExoPlayer/demos/main/src/main/java/com/google/android/exoplayer2/demo/DemoDownloadService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/demos/main/src/main/java/com/google/android/exoplayer2/demo/DemoDownloadService.java b/ExoPlayer/demos/main/src/main/java/com/google/android/exoplayer2/demo/DemoDownloadService.java
+--- a/ExoPlayer/demos/main/src/main/java/com/google/android/exoplayer2/demo/DemoDownloadService.java	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/demos/main/src/main/java/com/google/android/exoplayer2/demo/DemoDownloadService.java	(date 1764570113029)
+@@ -50,7 +50,7 @@
+         FOREGROUND_NOTIFICATION_ID,
+         DEFAULT_FOREGROUND_NOTIFICATION_UPDATE_INTERVAL,
+         DOWNLOAD_NOTIFICATION_CHANNEL_ID,
+-        R.string.exo_download_notification_channel_name,
++        R.string.application_name,
+         /* channelDescriptionResourceId= */ 0);
+   }
+ 
+Index: ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/PlayerNotificationManager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/PlayerNotificationManager.java b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/PlayerNotificationManager.java
+--- a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/PlayerNotificationManager.java	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/PlayerNotificationManager.java	(date 1764567797209)
+@@ -58,6 +58,7 @@
+ import androidx.media.app.NotificationCompat.MediaStyle;
+ import com.google.android.exoplayer2.C;
+ import com.google.android.exoplayer2.Player;
++import com.google.android.exoplayer2.R;
+ import com.google.android.exoplayer2.util.NotificationUtil;
+ import com.google.android.exoplayer2.util.Util;
+ import java.lang.annotation.Documented;
+Index: ExoPlayer/demos/main/src/main/java/com/google/android/exoplayer2/demo/TrackSelectionDialog.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/demos/main/src/main/java/com/google/android/exoplayer2/demo/TrackSelectionDialog.java b/ExoPlayer/demos/main/src/main/java/com/google/android/exoplayer2/demo/TrackSelectionDialog.java
+--- a/ExoPlayer/demos/main/src/main/java/com/google/android/exoplayer2/demo/TrackSelectionDialog.java	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/demos/main/src/main/java/com/google/android/exoplayer2/demo/TrackSelectionDialog.java	(date 1764570279891)
+@@ -271,11 +271,11 @@
+   private static String getTrackTypeString(Resources resources, @C.TrackType int trackType) {
+     switch (trackType) {
+       case C.TRACK_TYPE_VIDEO:
+-        return resources.getString(R.string.exo_track_selection_title_video);
++        return resources.getString(com.google.android.exoplayer2.R.string.exo_track_selection_title_video);
+       case C.TRACK_TYPE_AUDIO:
+-        return resources.getString(R.string.exo_track_selection_title_audio);
++        return resources.getString(com.google.android.exoplayer2.R.string.exo_track_selection_title_audio);
+       case C.TRACK_TYPE_TEXT:
+-        return resources.getString(R.string.exo_track_selection_title_text);
++        return resources.getString(com.google.android.exoplayer2.R.string.exo_track_selection_title_text);
+       default:
+         throw new IllegalArgumentException();
+     }
+@@ -343,8 +343,8 @@
+         @Nullable Bundle savedInstanceState) {
+       View rootView =
+           inflater.inflate(
+-              R.layout.exo_track_selection_dialog, container, /* attachToRoot= */ false);
+-      TrackSelectionView trackSelectionView = rootView.findViewById(R.id.exo_track_selection_view);
++              com.google.android.exoplayer2.R.layout.exo_track_selection_dialog, container, /* attachToRoot= */ false);
++      TrackSelectionView trackSelectionView = rootView.findViewById(com.google.android.exoplayer2.R.id.exo_track_selection_view);
+       trackSelectionView.setShowDisableOption(true);
+       trackSelectionView.setAllowMultipleOverrides(allowMultipleOverrides);
+       trackSelectionView.setAllowAdaptiveSelections(allowAdaptiveSelections);
+Index: ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/DefaultTimeBar.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/DefaultTimeBar.java b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/DefaultTimeBar.java
+--- a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/DefaultTimeBar.java	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/DefaultTimeBar.java	(date 1764567810609)
+@@ -38,6 +38,7 @@
+ import androidx.annotation.Nullable;
+ import androidx.annotation.RequiresApi;
+ import com.google.android.exoplayer2.C;
++import com.google.android.exoplayer2.R;
+ import com.google.android.exoplayer2.util.Assertions;
+ import com.google.android.exoplayer2.util.Util;
+ import java.util.Collections;
+Index: ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/DefaultTrackNameProvider.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/DefaultTrackNameProvider.java b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/DefaultTrackNameProvider.java
+--- a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/DefaultTrackNameProvider.java	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/DefaultTrackNameProvider.java	(date 1764567825397)
+@@ -20,6 +20,7 @@
+ import androidx.annotation.Nullable;
+ import com.google.android.exoplayer2.C;
+ import com.google.android.exoplayer2.Format;
++import com.google.android.exoplayer2.R;
+ import com.google.android.exoplayer2.util.Assertions;
+ import com.google.android.exoplayer2.util.MimeTypes;
+ import com.google.android.exoplayer2.util.Util;
+Index: ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/PlayerControlView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/PlayerControlView.java b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/PlayerControlView.java
+--- a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/PlayerControlView.java	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/PlayerControlView.java	(date 1764567834739)
+@@ -54,6 +54,7 @@
+ import com.google.android.exoplayer2.ExoPlayerLibraryInfo;
+ import com.google.android.exoplayer2.Player;
+ import com.google.android.exoplayer2.Player.Events;
++import com.google.android.exoplayer2.R;
+ import com.google.android.exoplayer2.Timeline;
+ import com.google.android.exoplayer2.util.Assertions;
+ import com.google.android.exoplayer2.util.RepeatModeUtil;
+Index: ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/PlayerView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/PlayerView.java b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/PlayerView.java
+--- a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/PlayerView.java	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/PlayerView.java	(date 1764567845983)
+@@ -52,6 +52,7 @@
+ import com.google.android.exoplayer2.PlaybackException;
+ import com.google.android.exoplayer2.Player;
+ import com.google.android.exoplayer2.Player.DiscontinuityReason;
++import com.google.android.exoplayer2.R;
+ import com.google.android.exoplayer2.Timeline;
+ import com.google.android.exoplayer2.Timeline.Period;
+ import com.google.android.exoplayer2.Tracks;
+Index: ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/StyledPlayerControlView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/StyledPlayerControlView.java b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/StyledPlayerControlView.java
+--- a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/StyledPlayerControlView.java	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/StyledPlayerControlView.java	(date 1764567853926)
+@@ -75,6 +75,7 @@
+ import com.google.android.exoplayer2.Format;
+ import com.google.android.exoplayer2.Player;
+ import com.google.android.exoplayer2.Player.Events;
++import com.google.android.exoplayer2.R;
+ import com.google.android.exoplayer2.Timeline;
+ import com.google.android.exoplayer2.Tracks;
+ import com.google.android.exoplayer2.source.TrackGroup;
+Index: ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/StyledPlayerControlViewLayoutManager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/StyledPlayerControlViewLayoutManager.java b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/StyledPlayerControlViewLayoutManager.java
+--- a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/StyledPlayerControlViewLayoutManager.java	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/StyledPlayerControlViewLayoutManager.java	(date 1764567863246)
+@@ -28,6 +28,7 @@
+ import android.view.ViewGroup.MarginLayoutParams;
+ import android.view.animation.LinearInterpolator;
+ import androidx.annotation.Nullable;
++import com.google.android.exoplayer2.R;
+ import java.util.ArrayList;
+ import java.util.List;
+ 
+Index: ExoPlayer/demos/main/src/main/java/com/google/android/exoplayer2/demo/DownloadTracker.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/demos/main/src/main/java/com/google/android/exoplayer2/demo/DownloadTracker.java b/ExoPlayer/demos/main/src/main/java/com/google/android/exoplayer2/demo/DownloadTracker.java
+--- a/ExoPlayer/demos/main/src/main/java/com/google/android/exoplayer2/demo/DownloadTracker.java	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/demos/main/src/main/java/com/google/android/exoplayer2/demo/DownloadTracker.java	(date 1764570156214)
+@@ -320,7 +320,7 @@
+       }
+       trackSelectionDialog =
+           TrackSelectionDialog.createForTracksAndParameters(
+-              /* titleId= */ R.string.exo_download_description,
++              /* titleId= */ com.google.android.exoplayer2.R.string.exo_controls_cc_disabled_description,
+               tracks,
+               DownloadHelper.getDefaultTrackSelectorParameters(context),
+               /* allowAdaptiveSelections= */ false,
+Index: ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/StyledPlayerView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/StyledPlayerView.java b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/StyledPlayerView.java
+--- a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/StyledPlayerView.java	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/StyledPlayerView.java	(date 1764567871114)
+@@ -58,6 +58,7 @@
+ import com.google.android.exoplayer2.PlaybackException;
+ import com.google.android.exoplayer2.Player;
+ import com.google.android.exoplayer2.Player.DiscontinuityReason;
++import com.google.android.exoplayer2.R;
+ import com.google.android.exoplayer2.Timeline;
+ import com.google.android.exoplayer2.Timeline.Period;
+ import com.google.android.exoplayer2.Tracks;
+Index: ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/TrackSelectionDialogBuilder.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/TrackSelectionDialogBuilder.java b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/TrackSelectionDialogBuilder.java
+--- a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/TrackSelectionDialogBuilder.java	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/TrackSelectionDialogBuilder.java	(date 1764567883775)
+@@ -29,6 +29,7 @@
+ import com.google.android.exoplayer2.C;
+ import com.google.android.exoplayer2.Format;
+ import com.google.android.exoplayer2.Player;
++import com.google.android.exoplayer2.R;
+ import com.google.android.exoplayer2.Tracks;
+ import com.google.android.exoplayer2.source.TrackGroup;
+ import com.google.android.exoplayer2.trackselection.TrackSelectionOverride;
+Index: ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/TrackSelectionView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/TrackSelectionView.java b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/TrackSelectionView.java
+--- a/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/TrackSelectionView.java	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/ui/src/main/java/com/google/android/exoplayer2/ui/TrackSelectionView.java	(date 1764567892173)
+@@ -25,6 +25,7 @@
+ import androidx.annotation.AttrRes;
+ import androidx.annotation.Nullable;
+ import com.google.android.exoplayer2.Format;
++import com.google.android.exoplayer2.R;
+ import com.google.android.exoplayer2.Tracks;
+ import com.google.android.exoplayer2.source.TrackGroup;
+ import com.google.android.exoplayer2.trackselection.TrackSelectionOverride;
+Index: ExoPlayer/library/core/src/main/java/com/google/android/exoplayer2/ui/DownloadNotificationHelper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/core/src/main/java/com/google/android/exoplayer2/ui/DownloadNotificationHelper.java b/ExoPlayer/library/core/src/main/java/com/google/android/exoplayer2/ui/DownloadNotificationHelper.java
+--- a/ExoPlayer/library/core/src/main/java/com/google/android/exoplayer2/ui/DownloadNotificationHelper.java	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/core/src/main/java/com/google/android/exoplayer2/ui/DownloadNotificationHelper.java	(date 1764568277569)
+@@ -27,8 +27,8 @@
+ import androidx.annotation.RequiresApi;
+ import androidx.annotation.StringRes;
+ import androidx.core.app.NotificationCompat;
++import com.google.android.exoplayer.R;
+ import com.google.android.exoplayer2.C;
+-import com.google.android.exoplayer2.core.R;
+ import com.google.android.exoplayer2.offline.Download;
+ import com.google.android.exoplayer2.scheduler.Requirements;
+ import com.google.android.exoplayer2.util.Util;
+@@ -127,23 +127,23 @@
+       }
+     }
+ 
+-    int titleStringId;
++    int titleStringId = 0;
+     boolean showProgress = true;
+     if (haveDownloadingTasks) {
+-      titleStringId = R.string.exo_download_downloading;
++      //titleStringId = R.string.exo_download_downloading;
+     } else if (haveQueuedTasks && notMetRequirements != 0) {
+       showProgress = false;
+       if ((notMetRequirements & Requirements.NETWORK_UNMETERED) != 0) {
+         // Note: This assumes that "unmetered" == "WiFi", since it provides a clearer message that's
+         // correct in the majority of cases.
+-        titleStringId = R.string.exo_download_paused_for_wifi;
++        //titleStringId = R.string.exo_download_paused_for_wifi;
+       } else if ((notMetRequirements & Requirements.NETWORK) != 0) {
+-        titleStringId = R.string.exo_download_paused_for_network;
++        //titleStringId = R.string.exo_download_paused_for_network;
+       } else {
+-        titleStringId = R.string.exo_download_paused;
++        //titleStringId = R.string.exo_download_paused;
+       }
+     } else if (haveRemovingTasks) {
+-      titleStringId = R.string.exo_download_removing;
++      //titleStringId = R.string.exo_download_removing;
+     } else {
+       // There are either no downloads, or all downloads are in terminal states.
+       titleStringId = NULL_STRING_ID;
+@@ -189,8 +189,8 @@
+       @DrawableRes int smallIcon,
+       @Nullable PendingIntent contentIntent,
+       @Nullable String message) {
+-    int titleStringId = R.string.exo_download_completed;
+-    return buildEndStateNotification(context, smallIcon, contentIntent, message, titleStringId);
++    //int titleStringId = R.string.exo_download_completed;
++    return buildEndStateNotification(context, smallIcon, contentIntent, message, 0);
+   }
+ 
+   /**
+@@ -207,8 +207,8 @@
+       @DrawableRes int smallIcon,
+       @Nullable PendingIntent contentIntent,
+       @Nullable String message) {
+-    @StringRes int titleStringId = R.string.exo_download_failed;
+-    return buildEndStateNotification(context, smallIcon, contentIntent, message, titleStringId);
++    //@StringRes int titleStringId = R.string.exo_download_failed;
++    return buildEndStateNotification(context, smallIcon, contentIntent, message, 0);
+   }
+ 
+   private Notification buildEndStateNotification(
+Index: ExoPlayer/publish.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/publish.gradle b/ExoPlayer/publish.gradle
+--- a/ExoPlayer/publish.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/publish.gradle	(date 1764565365684)
+@@ -24,7 +24,7 @@
+         }
+         publications {
+             release(MavenPublication) {
+-                from components.release
++                //from components.release
+                 artifact androidSourcesJar
+                 groupId = 'com.google.android.exoplayer'
+                 artifactId = releaseArtifactId
+Index: ExoPlayer/demos/gl/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/demos/gl/build.gradle b/ExoPlayer/demos/gl/build.gradle
+--- a/ExoPlayer/demos/gl/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/demos/gl/build.gradle	(date 1764567085479)
+@@ -16,7 +16,7 @@
+ 
+ android {
+     compileSdkVersion project.ext.compileSdkVersion
+-
++    namespace 'com.google.android.exoplayer2.gldemo'
+     compileOptions {
+         sourceCompatibility JavaVersion.VERSION_1_8
+         targetCompatibility JavaVersion.VERSION_1_8
+Index: ExoPlayer/library/container/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/container/build.gradle b/ExoPlayer/library/container/build.gradle
+--- a/ExoPlayer/library/container/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/container/build.gradle	(date 1764567624443)
+@@ -15,6 +15,7 @@
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ android {
+ 
++    namespace 'com.google.android.exoplayer.container'
+     defaultConfig {
+         // The following argument makes the Android Test Orchestrator run its
+         // "pm clear" command after each test invocation. This command ensures
+Index: ExoPlayer/gradlew
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/gradlew b/ExoPlayer/gradlew
+--- a/ExoPlayer/gradlew	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/gradlew	(date 1764564475996)
+@@ -55,7 +55,7 @@
+ #       Darwin, MinGW, and NonStop.
+ #
+ #   (3) This script is generated from the Groovy template
+-#       https://github.com/gradle/gradle/blob/master/subprojects/plugins/src/main/resources/org/gradle/api/internal/plugins/unixStartScript.txt
++#       https://github.com/gradle/gradle/blob/HEAD/subprojects/plugins/src/main/resources/org/gradle/api/internal/plugins/unixStartScript.txt
+ #       within the Gradle project.
+ #
+ #       You can find Gradle at https://github.com/gradle/gradle/.
+@@ -80,13 +80,11 @@
+     esac
+ done
+ 
+-APP_HOME=$( cd "${APP_HOME:-./}" && pwd -P ) || exit
+-
+-APP_NAME="Gradle"
++# This is normally unused
++# shellcheck disable=SC2034
+ APP_BASE_NAME=${0##*/}
+-
+-# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
+-DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
++# Discard cd standard output in case $CDPATH is set (https://github.com/gradle/gradle/issues/25036)
++APP_HOME=$( cd "${APP_HOME:-./}" > /dev/null && pwd -P ) || exit
+ 
+ # Use the maximum available, or set MAX_FD != -1 to use that value.
+ MAX_FD=maximum
+@@ -133,22 +131,29 @@
+     fi
+ else
+     JAVACMD=java
+-    which java >/dev/null 2>&1 || die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
++    if ! command -v java >/dev/null 2>&1
++    then
++        die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
+ 
+ Please set the JAVA_HOME variable in your environment to match the
+ location of your Java installation."
++    fi
+ fi
+ 
+ # Increase the maximum file descriptors if we can.
+ if ! "$cygwin" && ! "$darwin" && ! "$nonstop" ; then
+     case $MAX_FD in #(
+       max*)
++        # In POSIX sh, ulimit -H is undefined. That's why the result is checked to see if it worked.
++        # shellcheck disable=SC2039,SC3045
+         MAX_FD=$( ulimit -H -n ) ||
+             warn "Could not query maximum file descriptor limit"
+     esac
+     case $MAX_FD in  #(
+       '' | soft) :;; #(
+       *)
++        # In POSIX sh, ulimit -n is undefined. That's why the result is checked to see if it worked.
++        # shellcheck disable=SC2039,SC3045
+         ulimit -n "$MAX_FD" ||
+             warn "Could not set maximum file descriptor limit to $MAX_FD"
+     esac
+@@ -193,11 +198,15 @@
+     done
+ fi
+ 
+-# Collect all arguments for the java command;
+-#   * $DEFAULT_JVM_OPTS, $JAVA_OPTS, and $GRADLE_OPTS can contain fragments of
+-#     shell script including quotes and variable substitutions, so put them in
+-#     double quotes to make sure that they get re-expanded; and
+-#   * put everything else in single quotes, so that it's not re-expanded.
++
++# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
++DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
++
++# Collect all arguments for the java command:
++#   * DEFAULT_JVM_OPTS, JAVA_OPTS, JAVA_OPTS, and optsEnvironmentVar are not allowed to contain shell fragments,
++#     and any embedded shellness will be escaped.
++#   * For example: A user cannot expect ${Hostname} to be expanded, as it is an environment variable and will be
++#     treated as '${Hostname}' itself on the command line.
+ 
+ set -- \
+         "-Dorg.gradle.appname=$APP_BASE_NAME" \
+@@ -205,6 +214,12 @@
+         org.gradle.wrapper.GradleWrapperMain \
+         "$@"
+ 
++# Stop when "xargs" is not available.
++if ! command -v xargs >/dev/null 2>&1
++then
++    die "xargs is not available"
++fi
++
+ # Use "xargs" to parse quoted args.
+ #
+ # With -n1 it outputs one arg per line, with the quotes and backslashes removed.
+Index: ExoPlayer/gradlew.bat
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/gradlew.bat b/ExoPlayer/gradlew.bat
+--- a/ExoPlayer/gradlew.bat	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/gradlew.bat	(date 1764564476012)
+@@ -14,7 +14,7 @@
+ @rem limitations under the License.
+ @rem
+ 
+-@if "%DEBUG%" == "" @echo off
++@if "%DEBUG%"=="" @echo off
+ @rem ##########################################################################
+ @rem
+ @rem  Gradle startup script for Windows
+@@ -25,7 +25,8 @@
+ if "%OS%"=="Windows_NT" setlocal
+ 
+ set DIRNAME=%~dp0
+-if "%DIRNAME%" == "" set DIRNAME=.
++if "%DIRNAME%"=="" set DIRNAME=.
++@rem This is normally unused
+ set APP_BASE_NAME=%~n0
+ set APP_HOME=%DIRNAME%
+ 
+@@ -40,7 +41,7 @@
+ 
+ set JAVA_EXE=java.exe
+ %JAVA_EXE% -version >NUL 2>&1
+-if "%ERRORLEVEL%" == "0" goto execute
++if %ERRORLEVEL% equ 0 goto execute
+ 
+ echo.
+ echo ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
+@@ -75,13 +76,15 @@
+ 
+ :end
+ @rem End local scope for the variables with windows NT shell
+-if "%ERRORLEVEL%"=="0" goto mainEnd
++if %ERRORLEVEL% equ 0 goto mainEnd
+ 
+ :fail
+ rem Set variable GRADLE_EXIT_CONSOLE if you need the _script_ return code instead of
+ rem the _cmd.exe /c_ return code!
+-if  not "" == "%GRADLE_EXIT_CONSOLE%" exit 1
+-exit /b 1
++set EXIT_CODE=%ERRORLEVEL%
++if %EXIT_CODE% equ 0 set EXIT_CODE=1
++if not ""=="%GRADLE_EXIT_CONSOLE%" exit %EXIT_CODE%
++exit /b %EXIT_CODE%
+ 
+ :mainEnd
+ if "%OS%"=="Windows_NT" endlocal
+Index: ExoPlayer/extensions/ffmpeg/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/extensions/ffmpeg/build.gradle b/ExoPlayer/extensions/ffmpeg/build.gradle
+--- a/ExoPlayer/extensions/ffmpeg/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/extensions/ffmpeg/build.gradle	(date 1764567624368)
+@@ -20,7 +20,9 @@
+     // Should match cmake_minimum_required.
+     android.externalNativeBuild.cmake.version = '3.21.0+'
+ }
+-
++android {
++    namespace 'com.google.android.exoplayer2.ext.ffmpeg'
++}
+ dependencies {
+     implementation project(modulePrefix + 'library-decoder')
+     // TODO(b/203752526): Remove this dependency.
+Index: ExoPlayer/extensions/vp9/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/extensions/vp9/build.gradle b/ExoPlayer/extensions/vp9/build.gradle
+--- a/ExoPlayer/extensions/vp9/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/extensions/vp9/build.gradle	(date 1764567624364)
+@@ -14,6 +14,7 @@
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ 
+ android {
++    namespace 'com.google.android.exoplayer.ext.opus'
+     sourceSets {
+         main {
+             jniLibs.srcDir 'src/main/libs'
+Index: ExoPlayer/extensions/ima/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/extensions/ima/build.gradle b/ExoPlayer/extensions/ima/build.gradle
+--- a/ExoPlayer/extensions/ima/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/extensions/ima/build.gradle	(date 1764567624352)
+@@ -14,6 +14,7 @@
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ 
+ android {
++    namespace 'com.google.android.exoplayer.ima'
+     sourceSets {
+  androidTest.assets.srcDir '../../testdata/src/test/assets/'
+     }
+Index: ExoPlayer/extensions/av1/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/extensions/av1/build.gradle b/ExoPlayer/extensions/av1/build.gradle
+--- a/ExoPlayer/extensions/av1/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/extensions/av1/build.gradle	(date 1764567180579)
+@@ -14,6 +14,7 @@
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ 
+ android {
++    namespace 'com.google.android.exoplayer2.ext.av1'
+     defaultConfig {
+         externalNativeBuild {
+             cmake {
+Index: ExoPlayer/extensions/leanback/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/extensions/leanback/build.gradle b/ExoPlayer/extensions/leanback/build.gradle
+--- a/ExoPlayer/extensions/leanback/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/extensions/leanback/build.gradle	(date 1764567624401)
+@@ -15,6 +15,9 @@
+ 
+ android.defaultConfig.minSdkVersion 17
+ 
++android {
++    namespace 'com.google.android.exoplayer.ext.leanback'
++}
+ dependencies {
+     implementation project(modulePrefix + 'library-common')
+     implementation 'androidx.annotation:annotation:' + androidxAnnotationVersion
+Index: ExoPlayer/extensions/media2/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/extensions/media2/build.gradle b/ExoPlayer/extensions/media2/build.gradle
+--- a/ExoPlayer/extensions/media2/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/extensions/media2/build.gradle	(date 1764567624396)
+@@ -13,6 +13,9 @@
+ // limitations under the License.
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ 
++android {
++    namespace 'com.google.android.exoplayer'
++}
+ dependencies {
+     implementation project(modulePrefix + 'library-common')
+     implementation 'androidx.collection:collection:' + androidxCollectionVersion
+Index: ExoPlayer/extensions/mediasession/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/extensions/mediasession/build.gradle b/ExoPlayer/extensions/mediasession/build.gradle
+--- a/ExoPlayer/extensions/mediasession/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/extensions/mediasession/build.gradle	(date 1764567624377)
+@@ -12,7 +12,9 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+-
++android {
++    namespace 'com.google.android.exoplayer.ext.mediasession'
++}
+ dependencies {
+     implementation project(modulePrefix + 'library-common')
+     api 'androidx.media:media:' + androidxMediaVersion
+Index: ExoPlayer/extensions/rtmp/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/extensions/rtmp/build.gradle b/ExoPlayer/extensions/rtmp/build.gradle
+--- a/ExoPlayer/extensions/rtmp/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/extensions/rtmp/build.gradle	(date 1764567624404)
+@@ -12,7 +12,9 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+-
++android {
++    namespace 'com.google.android.exoplayer.ext.rtmp'
++}
+ dependencies {
+     implementation project(modulePrefix + 'library-common')
+     implementation project(modulePrefix + 'library-datasource')
+Index: ExoPlayer/demos/cast/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/demos/cast/build.gradle b/ExoPlayer/demos/cast/build.gradle
+--- a/ExoPlayer/demos/cast/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/demos/cast/build.gradle	(date 1764566933815)
+@@ -16,7 +16,7 @@
+ 
+ android {
+     compileSdkVersion project.ext.compileSdkVersion
+-
++    namespace 'com.google.android.exoplayer2.castdemo'
+     compileOptions {
+         sourceCompatibility JavaVersion.VERSION_1_8
+         targetCompatibility JavaVersion.VERSION_1_8
+Index: ExoPlayer/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/build.gradle b/ExoPlayer/build.gradle
+--- a/ExoPlayer/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/build.gradle	(date 1764566184064)
+@@ -17,7 +17,7 @@
+         mavenCentral()
+     }
+     dependencies {
+-        classpath 'com.android.tools.build:gradle:7.2.2'
++        classpath 'com.android.tools.build:gradle:8.10.1'
+         classpath 'com.google.android.gms:strict-version-matcher-plugin:1.2.4'
+         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.20'
+     }
+Index: ExoPlayer/extensions/cronet/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/extensions/cronet/src/main/AndroidManifest.xml b/ExoPlayer/extensions/cronet/src/main/AndroidManifest.xml
+--- a/ExoPlayer/extensions/cronet/src/main/AndroidManifest.xml	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/extensions/cronet/src/main/AndroidManifest.xml	(date 1764568353141)
+@@ -14,7 +14,7 @@
+ -->
+ 
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-    package="com.google.android.exoplayer2.ext.cronet">
++    >
+ 
+     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+     <uses-sdk />
+Index: ExoPlayer/library/extractor/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/extractor/src/main/AndroidManifest.xml b/ExoPlayer/library/extractor/src/main/AndroidManifest.xml
+--- a/ExoPlayer/library/extractor/src/main/AndroidManifest.xml	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/extractor/src/main/AndroidManifest.xml	(date 1764568388049)
+@@ -14,6 +14,6 @@
+      limitations under the License.
+ -->
+ 
+-<manifest package="com.google.android.exoplayer2.extractor">
++<manifest>
+   <uses-sdk />
+ </manifest>
+Index: ExoPlayer/gradle/wrapper/gradle-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/ExoPlayer/gradle/wrapper/gradle-wrapper.properties b/ExoPlayer/gradle/wrapper/gradle-wrapper.properties
+--- a/ExoPlayer/gradle/wrapper/gradle-wrapper.properties	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/gradle/wrapper/gradle-wrapper.properties	(date 1764569151046)
+@@ -1,5 +1,7 @@
+ distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-7.4.2-all.zip
++distributionUrl=gradle-8.11.1-bin.zip
++networkTimeout=10000
++validateDistributionUrl=true
+ zipStoreBase=GRADLE_USER_HOME
+ zipStorePath=wrapper/dists
+Index: ExoPlayer/library/common/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/common/src/main/AndroidManifest.xml b/ExoPlayer/library/common/src/main/AndroidManifest.xml
+--- a/ExoPlayer/library/common/src/main/AndroidManifest.xml	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/common/src/main/AndroidManifest.xml	(date 1764568409922)
+@@ -14,8 +14,7 @@
+      limitations under the License.
+ -->
+ 
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-    package="com.google.android.exoplayer2.common">
++<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+   <uses-sdk />
+ </manifest>
+Index: ExoPlayer/extensions/ima/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/extensions/ima/src/main/AndroidManifest.xml b/ExoPlayer/extensions/ima/src/main/AndroidManifest.xml
+--- a/ExoPlayer/extensions/ima/src/main/AndroidManifest.xml	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/extensions/ima/src/main/AndroidManifest.xml	(date 1764568436077)
+@@ -13,8 +13,7 @@
+      See the License for the specific language governing permissions and
+      limitations under the License.
+ -->
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-    package="com.google.android.exoplayer2.ext.ima">
++<manifest xmlns:android="http://schemas.android.com/apk/res/android" >
+   <uses-sdk />
+   <application>
+     <meta-data android:name="com.google.android.gms.ads.AD_MANAGER_APP"
+Index: ExoPlayer/library/core/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/core/src/main/AndroidManifest.xml b/ExoPlayer/library/core/src/main/AndroidManifest.xml
+--- a/ExoPlayer/library/core/src/main/AndroidManifest.xml	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/core/src/main/AndroidManifest.xml	(date 1764568459466)
+@@ -14,8 +14,7 @@
+      limitations under the License.
+ -->
+ 
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-    package="com.google.android.exoplayer2.core">
++<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+   <uses-sdk />
+ </manifest>
+Index: ExoPlayer/library/smoothstreaming/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/smoothstreaming/src/main/AndroidManifest.xml b/ExoPlayer/library/smoothstreaming/src/main/AndroidManifest.xml
+--- a/ExoPlayer/library/smoothstreaming/src/main/AndroidManifest.xml	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/smoothstreaming/src/main/AndroidManifest.xml	(date 1764568486879)
+@@ -14,6 +14,6 @@
+      limitations under the License.
+ -->
+ 
+-<manifest package="com.google.android.exoplayer2.source.smoothstreaming">
++<manifest >
+   <uses-sdk />
+ </manifest>
+Index: ExoPlayer/library/database/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/database/src/main/AndroidManifest.xml b/ExoPlayer/library/database/src/main/AndroidManifest.xml
+--- a/ExoPlayer/library/database/src/main/AndroidManifest.xml	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/database/src/main/AndroidManifest.xml	(date 1764568501157)
+@@ -14,6 +14,6 @@
+      limitations under the License.
+ -->
+ 
+-<manifest package="com.google.android.exoplayer2.database">
++<manifest >
+   <uses-sdk/>
+ </manifest>
+Index: ExoPlayer/library/container/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/container/src/main/AndroidManifest.xml b/ExoPlayer/library/container/src/main/AndroidManifest.xml
+--- a/ExoPlayer/library/container/src/main/AndroidManifest.xml	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/container/src/main/AndroidManifest.xml	(date 1764568516917)
+@@ -14,6 +14,6 @@
+      limitations under the License.
+ -->
+ 
+-<manifest package="com.google.android.exoplayer2.container">
++<manifest >
+   <uses-sdk />
+ </manifest>
+Index: ExoPlayer/library/decoder/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/decoder/src/main/AndroidManifest.xml b/ExoPlayer/library/decoder/src/main/AndroidManifest.xml
+--- a/ExoPlayer/library/decoder/src/main/AndroidManifest.xml	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/decoder/src/main/AndroidManifest.xml	(date 1764568538833)
+@@ -14,6 +14,6 @@
+      limitations under the License.
+ -->
+ 
+-<manifest package="com.google.android.exoplayer2.decoder">
++<manifest >
+   <uses-sdk/>
+ </manifest>
+Index: ExoPlayer/library/hls/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/hls/src/main/AndroidManifest.xml b/ExoPlayer/library/hls/src/main/AndroidManifest.xml
+--- a/ExoPlayer/library/hls/src/main/AndroidManifest.xml	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/hls/src/main/AndroidManifest.xml	(date 1764568582171)
+@@ -14,6 +14,6 @@
+      limitations under the License.
+ -->
+ 
+-<manifest package="com.google.android.exoplayer2.source.hls">
++<manifest >
+   <uses-sdk />
+ </manifest>
+Index: ExoPlayer/extensions/okhttp/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/extensions/okhttp/build.gradle b/ExoPlayer/extensions/okhttp/build.gradle
+--- a/ExoPlayer/extensions/okhttp/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/extensions/okhttp/build.gradle	(date 1764567624306)
+@@ -14,7 +14,9 @@
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ 
+ android.defaultConfig.minSdkVersion 21
+-
++android {
++    namespace 'com.google.android.exoplayer.ext.okhttp'
++}
+ dependencies {
+     implementation project(modulePrefix + 'library-common')
+     implementation project(modulePrefix + 'library-datasource')
+Index: ExoPlayer/library/effect/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/effect/src/main/AndroidManifest.xml b/ExoPlayer/library/effect/src/main/AndroidManifest.xml
+--- a/ExoPlayer/library/effect/src/main/AndroidManifest.xml	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/effect/src/main/AndroidManifest.xml	(date 1764568582161)
+@@ -13,6 +13,6 @@
+      See the License for the specific language governing permissions and
+      limitations under the License.
+ -->
+-<manifest package="com.google.android.exoplayer2.effect">
++<manifest >
+   <uses-sdk />
+ </manifest>
+Index: ExoPlayer/library/datasource/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/datasource/src/main/AndroidManifest.xml b/ExoPlayer/library/datasource/src/main/AndroidManifest.xml
+--- a/ExoPlayer/library/datasource/src/main/AndroidManifest.xml	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/datasource/src/main/AndroidManifest.xml	(date 1764568582166)
+@@ -14,6 +14,6 @@
+      limitations under the License.
+ -->
+ 
+-<manifest package="com.google.android.exoplayer2.upstream">
++<manifest >
+   <uses-sdk/>
+ </manifest>
+Index: ExoPlayer/library/core/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/library/core/build.gradle b/ExoPlayer/library/core/build.gradle
+--- a/ExoPlayer/library/core/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/library/core/build.gradle	(date 1764567624388)
+@@ -14,6 +14,7 @@
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ 
+ android {
++    namespace 'com.google.android.exoplayer'
+     defaultConfig {
+         // The following argument makes the Android Test Orchestrator run its
+         // "pm clear" command after each test invocation. This command ensures
+Index: ExoPlayer/extensions/workmanager/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/extensions/workmanager/build.gradle b/ExoPlayer/extensions/workmanager/build.gradle
+--- a/ExoPlayer/extensions/workmanager/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/extensions/workmanager/build.gradle	(date 1764567624372)
+@@ -14,7 +14,9 @@
+  * limitations under the License.
+  */
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+-
++android {
++    namespace 'com.google.android.exoplayer.ext.workmanager'
++}
+ dependencies {
+     implementation project(modulePrefix + 'library-core')
+     implementation 'androidx.work:work-runtime:2.8.1'
+Index: ExoPlayer/extensions/flac/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/extensions/flac/build.gradle b/ExoPlayer/extensions/flac/build.gradle
+--- a/ExoPlayer/extensions/flac/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/extensions/flac/build.gradle	(date 1764567624329)
+@@ -14,6 +14,7 @@
+  apply from: "$gradle.ext.exoplayerSettingsDir/common_library_config.gradle"
+ 
+ android {
++    namespace 'com.google.android.exoplayer2.ext.flac'
+     sourceSets {
+         main {
+             jniLibs.srcDir 'src/main/libs'
+Index: ExoPlayer/demos/surface/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ExoPlayer/demos/surface/build.gradle b/ExoPlayer/demos/surface/build.gradle
+--- a/ExoPlayer/demos/surface/build.gradle	(revision dd430f7053a1a3958deea3ead6a0565150c06bfc)
++++ b/ExoPlayer/demos/surface/build.gradle	(date 1764567085489)
+@@ -16,7 +16,7 @@
+ 
+ android {
+     compileSdkVersion project.ext.compileSdkVersion
+-
++    namespace 'com.google.android.exoplayer2.surfacedemo'
+     compileOptions {
+         sourceCompatibility JavaVersion.VERSION_1_8
+         targetCompatibility JavaVersion.VERSION_1_8
+diff --git a/ExoPlayer/gradle/wrapper/gradle-wrapper.jar b/ExoPlayer/gradle/wrapper/gradle-wrapper.jar
+index 41d9927a4d4fb3f96a785543079b8df6723c946b..d64cd4917707c1f8861d8cb53dd15194d4248596
+GIT binary patch
+literal 43462
+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
+a{L3(#t_D5<)*r&`Sa^reK1CV7w*Ct@1Xhv&
+
