@@ -8,3 +8,43 @@ i/insert插入
 esc退出
 ：wq保存推出编辑界面
 git push HADE：for/<远端分支>
+
+
+3、打patch
+在B分支用 git am *.patch 命令打上所有patch。
+
+若没有任何问题，git am 会直接将 patch 的所有信息都打上去，使用 git log 可以查看是否成功。
+
+但意外才是常态！
+
+下面几个命令在遇到问题时会经常使用。
+
+检查patch修改的文件：
+
+git apply --stat xxxx.patch
+
+检查patch能否打成功：
+
+git apply --check xxxx.patch
+
+若这条命令没有任何输出，则代表可以直接打成功；若有冲突，则会输出error信息。
+
+有冲突没关系，使用下面命令强行合入 patch 中不冲突的代码，同时保留冲突的部分：
+
+git apply --reject xxxx.patch
+
+使用上面的命令，会把有冲突的部分保存为 .rej文件，然后手动编辑发生冲突的code文件，解决冲突后，删除 .rej文件，通过 git add 命令将相关文件添加到暂存区中。
+
+告诉git冲突解决，继续打patch：
+
+git am --resolved
+
+若需要跳过有冲突的patch，则使用：
+
+git am --skip
+
+若中途不想打patch了，恢复原状，则使用：
+
+git am --abort
+
+上面就是整个流程，最后通过 git log 命令来查看是否成功，确认没问题后使用 git push 命令将修改推送到远程仓库。
